@@ -1,0 +1,42 @@
+{
+  "compilerOptions": {
+    // File Layout
+    "rootDir": "./src",
+    "outDir": "./dist",
+
+    // Environment Settings
+    "module": "commonjs",       // changed: nodenext causes .js extension issues with express
+    "target": "es2020",         // changed: esnext can cause issues in older node versions
+    "lib": ["es2020"],
+    "types": ["node"],          // changed: added node for process, __dirname etc.
+
+    // Other Outputs
+    "sourceMap": true,
+    "declaration": true,
+    "declarationMap": true,
+
+    // Stricter Typechecking Options
+    "noUncheckedIndexedAccess": true,
+    "exactOptionalPropertyTypes": true,
+
+    // Style Options
+    // "noImplicitReturns": true,
+    // "noImplicitOverride": true,
+    // "noUnusedLocals": true,
+    // "noUnusedParameters": true,
+    // "noFallthroughCasesInSwitch": true,
+    // "noPropertyAccessFromIndexSignature": true,
+
+    // Recommended Options
+    "strict": true,
+    // "jsx": "react-jsx",      // removed: not needed for express backend
+    "esModuleInterop": true,    // added: allows import express from 'express'
+    "isolatedModules": true,
+    "noUncheckedSideEffectImports": true,
+    "moduleDetection": "force",
+    "skipLibCheck": true,
+    // "verbatimModuleSyntax": true  // removed: conflicts with commonjs + esModuleInterop
+  },
+  "include": ["src/**/*"],
+  "exclude": ["node_modules", "dist"]
+}
