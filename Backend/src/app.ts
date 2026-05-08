@@ -18,7 +18,7 @@ app.get("/",(req: Request, res: Response)=>{
 
 app.get("/health", async(req: Request, res: Response)=>{
   try{
-    await prisma.$queryRaw`SELECT 1`;
+    await prisma.$queryRaw`SELECT 1`; //$queryRaw tells prisma to stop writing sql yourself and write my code instead
     res.json({status:"ok",database:"connected"});
   }catch(error){
     res.status(500).json({status:"bad",database:"not connected"});
