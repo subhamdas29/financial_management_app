@@ -1,10 +1,11 @@
 import express, {Request, Response, NextFunction} from "express";
-import cors from "cors"
-
-
+import cors from "cors";
+import "dotenv/config";
+import { prisma } from "./config/database"
 
 const app = express();
-const PORT= 5500;
+const PORT= process.env.PORT || 3000;
+
 app.use(cors());
 app.use(express.json());
 
@@ -12,10 +13,17 @@ app.use(express.json());
 
 app.get("/",(req: Request, res: Response)=>{
   res.json({message: "The app is running."});
-})
+});
 
 
-
+app.get("/health", async(req: Request, res: Response)=>{
+  try{
+    await prisma.$queryRaw`SELECT 1`;
+    res.json({status:"ok",database:"connected"});
+  }catch(error){
+    res.status(500).json({status:"bad",database:"not connected"});
+  }
+});
 
 
 

@@ -61,3 +61,4 @@ coverage/
 *.tsbuildinfo
 .npm
 .eslintcache
+/src/generated/prisma

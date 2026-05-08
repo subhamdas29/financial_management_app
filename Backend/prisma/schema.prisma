@@ -1,0 +1,121 @@
+// prisma/schema.prisma
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id           String    @id @default(cuid())
+  email        String    @unique
+  passwordHash String
+  name         String
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+
+  accounts     Account[]
+  folders      Folder[]
+
+  @@map("users")
+}
+
+model Account {
+  id            String          @id @default(cuid())
+  userId        String
+  user          User            @relation(fields: [userId], references: [id])
+  name          String          // "HDFC Savings", "SBI Current"
+  accountNumber String          @unique
+  accountType   AccountType
+  balance       Decimal         @db.Decimal(15, 2)
+  currency      String          @default("INR")
+  isActive      Boolean         @default(true)
+  createdAt     DateTime        @default(now())
+
+  sentTransfers     Transfer[]  @relation("FromAccount")
+  receivedTransfers Transfer[]  @relation("ToAccount")
+  transactions      Transaction[]
+
+  @@map("accounts")
+}
+
+enum AccountType {
+  SAVINGS
+  CURRENT
+  SALARY
+  FIXED_DEPOSIT
+}
+
+// The FOLDER system — your key feature
+model Folder {
+  id          String      @id @default(cuid())
+  userId      String
+  user        User        @relation(fields: [userId], references: [id])
+  name        String      // "Rent", "Food", "Shopping", "Salary"
+  type        FolderType  // INCOME or EXPENSE
+  color       String?     // UI color tag
+  icon        String?     // emoji or icon name
+  description String?
+  budgetLimit Decimal?    @db.Decimal(15, 2)  // optional monthly budget
+  createdAt   DateTime    @default(now())
+
+  transactions Transaction[]
+
+  @@unique([userId, name])
+  @@map("folders")
+}
+
+enum FolderType {
+  INCOME      // Salary, freelance, etc.
+  EXPENSE     // Rent, food, shopping, etc.
+}
+
+model Transaction {
+  id            String            @id @default(cuid())
+  accountId     String
+  account       Account           @relation(fields: [accountId], references: [id])
+  folderId      String?           // nullable — user assigns manually
+  folder        Folder?           @relation(fields: [folderId], references: [id])
+  amount        Decimal           @db.Decimal(15, 2)
+  type          TransactionType   // CREDIT or DEBIT
+  description   String
+  merchant      String?
+  status        TransactionStatus @default(COMPLETED)
+  transactedAt  DateTime          @default(now())
+  createdAt     DateTime          @default(now())
+  metadata      Json?             // extra data (UPI ref, etc.)
+
+  @@index([accountId])
+  @@index([folderId])
+  @@index([transactedAt])
+  @@map("transactions")
+}
+
+enum TransactionType {
+  CREDIT
+  DEBIT
+}
+
+enum TransactionStatus {
+  PENDING
+  COMPLETED
+  FAILED
+  REVERSED
+}
+
+model Transfer {
+  id            String    @id @default(cuid())
+  fromAccountId String
+  toAccountId   String
+  fromAccount   Account   @relation("FromAccount", fields: [fromAccountId], references: [id])
+  toAccount     Account   @relation("ToAccount", fields: [toAccountId], references: [id])
+  amount        Decimal   @db.Decimal(15, 2)
+  description   String?
+  status        TransactionStatus @default(COMPLETED)
+  transferredAt DateTime  @default(now())
+
+  @@map("transfers")
+}
