@@ -5,10 +5,9 @@ import { env } from '../../config/env';
 import { ApiError } from '../../shared/utils/ApiError';
 import { RegisterInput, LoginInput } from './auth.schema';
 import { JwtPayload } from '../../shared/types';
-import { email } from 'zod';
 
 const generateTokens = (payload: JwtPayload)=>{ // This function generates the JWT tokens
-    const accessToken = jwt.sign(payload, env.JWT_secret as string,{ // signs the userId and email so that it becomes unique and secure
+    const accessToken = jwt.sign(payload, env.JWT_SECRET as string,{ // signs the userId and email so that it becomes unique and secure
         expiresIn: env.JWT_ACCESS_EXPIRES_IN as any,
     });
 
