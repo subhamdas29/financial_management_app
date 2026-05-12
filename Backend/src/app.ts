@@ -7,23 +7,21 @@ import helmet from "helmet";
 import morgan from "morgan";
 import { errorMiddleware } from "./middleware/error.middleware";
 import authRouter from "./modules/auth/auth.router";
+import accountsRouter from './modules/accounts/accounts.router';
+
 
 const app = express();
 const PORT= process.env.PORT || 3000;
 
-app.use(helmet());
-app.use(cors());
-app.use(morgan("dev"));
-app.use(express.json());
+
+app.use(helmet()); //  to protect from XSS or clickjacking
+app.use(cors()); // to allow frontend enter into the backend 
+app.use(morgan("dev")); // logger
+app.use(express.json()); // to use json
 
 
 app.use("/api/auth", authRouter);
-
-
-app.get("/",(req: Request, res: Response)=>{
-  res.json({message: "The app is running."});
-});
-
+app.use("/api/accounts", accountsRouter);
 
 app.get("/health", async(req: Request, res: Response)=>{
   try{
