@@ -11,7 +11,7 @@ export const authController = {
 
     login: asyncHandler(async(req: Request, res: Response)=>{
         const result = await authService.login(req.body);
-        sendSuccess(res, result, "Login successful");
+        sendSuccess(res, result, "Login successful", 200);
     }),
 
     refresh: asyncHandler(async(req: Request, res: Response)=>{

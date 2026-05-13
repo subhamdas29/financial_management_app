@@ -8,7 +8,7 @@ import morgan from "morgan";
 import { errorMiddleware } from "./middleware/error.middleware";
 import authRouter from "./modules/auth/auth.router";
 import accountsRouter from './modules/accounts/accounts.router';
-
+import transactionsRouter from "./modules/transactions/transactions.router"
 
 const app = express();
 const PORT= process.env.PORT || 3000;
@@ -22,6 +22,7 @@ app.use(express.json()); // to use json
 
 app.use("/api/auth", authRouter);
 app.use("/api/accounts", accountsRouter);
+app.use("/api/transactions", transactionsRouter);
 
 app.get("/health", async(req: Request, res: Response)=>{
   try{
