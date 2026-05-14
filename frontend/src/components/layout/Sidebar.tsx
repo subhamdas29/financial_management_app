@@ -1,9 +1,11 @@
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import {
   LayoutDashboard, CreditCard, ArrowLeftRight,
-  FolderOpen, Receipt,
+  FolderOpen, Receipt, LogOut,
 } from 'lucide-react';
 import clsx from 'clsx';
+import { useAuthStore } from '../../store/auth.store';
+import PayFlowLogo from '../../assets/PayFlowLogo.png';
 
 const links = [
   { to: '/', icon: LayoutDashboard, label: 'Dashboard' },
@@ -14,16 +16,23 @@ const links = [
 ];
 
 export const Sidebar = () => {
+  const { logout } = useAuthStore();
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    logout();
+    navigate('/login');
+  };
+
   return (
-    <aside className="w-56 h-screen bg-dark-800 flex flex-col fixed left-0 top-0 z-30">
+    <aside className="w-56 h-screen bg-dark-800 border-r border-[#2A2A2A] flex flex-col fixed left-0 top-0 z-30">
       {/* Logo */}
-      <div className="px-6 py-5 flex items-center gap-3">
-        <div className="w-9 h-9 bg-accent rounded-lg flex items-center justify-center">
-          <CreditCard size={18} className="text-black" />
-        </div>
-        <span className="text-lg font-bold tracking-tight">
-          Pay<span className="text-accent">Flow</span>
-        </span>
+      <div className="px-4 py-4 flex items-center">
+        <img
+          src={PayFlowLogo}
+          alt="PayFlow"
+          className="h-8 w-auto object-contain"
+        />
       </div>
 
       {/* Nav */}
@@ -47,6 +56,17 @@ export const Sidebar = () => {
           </NavLink>
         ))}
       </nav>
+
+      {/* Logout */}
+      <div className="px-3 py-4 border-t border-[#2A2A2A]">
+        <button
+          onClick={handleLogout}
+          className="flex items-center gap-3 w-full px-4 py-2.5 rounded-xl text-sm font-medium text-gray-400 hover:text-red-400 hover:bg-dark-600 transition-all"
+        >
+          <LogOut size={17} />
+          Logout
+        </button>
+      </div>
     </aside>
   );
 };
