@@ -21,7 +21,10 @@ const PORT= process.env.PORT || 3000;
 
 // middlewares
 app.use(helmet()); //  to protect from XSS or clickjacking
-app.use(cors()); // to allow frontend enter into the backend 
+app.use(cors({
+  origin: 'http://localhost:5173',
+  credentials: true,
+})); // to allow frontend enter into the backend 
 app.use(morgan("dev")); // logger
 app.use(express.json()); // to use json
 
@@ -47,5 +50,5 @@ initSocket(httpServer);
 
 
 httpServer.listen(PORT,()=>{
-  console.log("Server running on http://localhost:${PORT}");
+  console.log(`Server running on http://localhost:${PORT}`);
 })

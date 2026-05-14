@@ -66,7 +66,7 @@ export const Dashboard = () => {
     <div className="space-y-6">
       <div>
         <h1 className="text-2xl font-bold">
-          Good morning, {user?.name?.split(' ')[0]} 👋
+          Good morning, {user?.name?.split(' ')[0]} 
         </h1>
         <p className="text-gray-500 text-sm mt-1">
           Here's your financial overview
