@@ -1,15 +1,15 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { foldersApi } from '../api/folders.api';
-// import type{ Folder } from '../types';
 import { Card } from '../components/ui/Card';
 import { Button } from '../components/ui/Button';
 import { Modal } from '../components/ui/Modal';
 import { Input } from '../components/ui/Input';
 import { Badge } from '../components/ui/Badge';
 import { Loader } from '../components/ui/Loader';
-import { Plus } from 'lucide-react';
+import { Plus, Trash2 } from 'lucide-react';
 import toast from 'react-hot-toast';
+
 
 export const Folders = () => {
   const navigate = useNavigate();
@@ -33,6 +33,18 @@ export const Folders = () => {
   };
 
   useEffect(() => { fetchFolders(); }, []);
+
+  const handleDelete = async (e: React.MouseEvent, folderId: string) => {
+    e.stopPropagation();
+    if (!confirm('Delete this folder? Transactions will be unassigned.')) return;
+    try {
+      await foldersApi.delete(folderId);
+      toast.success('Folder deleted');
+      fetchFolders();
+    } catch (err: any) {
+      toast.error(err.response?.data?.message ?? 'Failed to delete');
+    }
+  };
 
   const handleCreate = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -73,7 +85,15 @@ export const Folders = () => {
           <div className="grid grid-cols-3 gap-4">
             {income.map((f) => (
               <Card key={f.id} onClick={() => navigate(`/folders/${f.id}`)}>
-                <div className="text-2xl mb-2">{f.icon || '📁'}</div>
+                <div className="flex items-start justify-between">
+                  <div className="text-2xl mb-2">{f.icon || '📁'}</div>
+                  <button
+                    onClick={(e) => handleDelete(e, f.id)}
+                    className="text-gray-600 hover:text-red-400 transition-colors p-1"
+                  >
+                    <Trash2 size={14} />
+                  </button>
+                </div>
                 <p className="font-semibold">{f.name}</p>
                 <p className="text-accent font-bold mt-2">
                   ₹{Number(f.monthlySpent).toLocaleString('en-IN')}
@@ -92,7 +112,15 @@ export const Folders = () => {
           <div className="grid grid-cols-3 gap-4">
             {expense.map((f) => (
               <Card key={f.id} onClick={() => navigate(`/folders/${f.id}`)}>
-                <div className="text-2xl mb-2">{f.icon || '📁'}</div>
+                <div className="flex items-start justify-between">
+                  <div className="text-2xl mb-2">{f.icon || '📁'}</div>
+                  <button
+                    onClick={(e) => handleDelete(e, f.id)}
+                    className="text-gray-600 hover:text-red-400 transition-colors p-1"
+                  >
+                    <Trash2 size={14} />
+                  </button>
+                </div>
                 <p className="font-semibold">{f.name}</p>
                 <p className="text-red-400 font-bold mt-2">
                   ₹{Number(f.monthlySpent).toLocaleString('en-IN')}

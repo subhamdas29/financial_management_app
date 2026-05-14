@@ -1,9 +1,8 @@
-import { NavLink, useNavigate } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import {
   LayoutDashboard, CreditCard, ArrowLeftRight,
-  FolderOpen, Receipt, LogOut,
+  FolderOpen, Receipt,
 } from 'lucide-react';
-import { useAuthStore } from '../../store/auth.store';
 import clsx from 'clsx';
 
 const links = [
@@ -15,25 +14,20 @@ const links = [
 ];
 
 export const Sidebar = () => {
-  const { logout, user } = useAuthStore();
-  const navigate = useNavigate();
-
-  const handleLogout = () => {
-    logout();
-    navigate('/login');
-  };
-
   return (
-    <aside className="w-64 h-screen bg-dark-800 border-r border-dark-600 flex flex-col fixed left-0 top-0">
+    <aside className="w-56 h-screen bg-dark-800 flex flex-col fixed left-0 top-0 z-30">
       {/* Logo */}
-      <div className="p-6 border-b border-dark-600">
-        <span className="text-xl font-bold">
+      <div className="px-6 py-5 flex items-center gap-3">
+        <div className="w-9 h-9 bg-accent rounded-lg flex items-center justify-center">
+          <CreditCard size={18} className="text-black" />
+        </div>
+        <span className="text-lg font-bold tracking-tight">
           Pay<span className="text-accent">Flow</span>
         </span>
       </div>
 
       {/* Nav */}
-      <nav className="flex-1 p-4 flex flex-col gap-1">
+      <nav className="flex-1 px-3 py-2 flex flex-col gap-0.5">
         {links.map(({ to, icon: Icon, label }) => (
           <NavLink
             key={to}
@@ -44,35 +38,15 @@ export const Sidebar = () => {
                 'flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-medium transition-all',
                 isActive
                   ? 'bg-accent text-black'
-                  : 'text-gray-400 hover:text-white hover:bg-dark-700'
+                  : 'text-gray-400 hover:text-white hover:bg-dark-600'
               )
             }
           >
-            <Icon size={18} />
+            <Icon size={17} />
             {label}
           </NavLink>
         ))}
       </nav>
-
-      {/* User */}
-      <div className="p-4 border-t border-dark-600">
-        <div className="flex items-center gap-3 mb-3">
-          <div className="w-8 h-8 rounded-full bg-accent flex items-center justify-center text-black font-bold text-sm">
-            {user?.name?.[0]?.toUpperCase() ?? 'U'}
-          </div>
-          <div>
-            <p className="text-sm font-medium">{user?.name}</p>
-            <p className="text-xs text-gray-500">{user?.email}</p>
-          </div>
-        </div>
-        <button
-          onClick={handleLogout}
-          className="flex items-center gap-2 text-gray-500 hover:text-red-400 text-sm transition-colors w-full"
-        >
-          <LogOut size={16} />
-          Logout
-        </button>
-      </div>
     </aside>
   );
 };

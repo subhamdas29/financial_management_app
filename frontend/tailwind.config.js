@@ -5,15 +5,16 @@ export default {
   theme: {
     extend: {
       colors: {
-        accent: '#CCFF00',        // lime green from reference
+        accent: '#F5C518',        // golden yellow from reference
         dark: {
-          900: '#0A0A0A',
-          800: '#111111',
-          700: '#1A1A1A',
-          600: '#222222',
-          500: '#2A2A2A',
+          900: '#111111',
+          800: '#1A1A1A',
+          700: '#222222',
+          600: '#2A2A2A',
+          500: '#333333',
+          400: '#3A3A3A',
         },
-        surface: '#F5F5F5',
+        surface: '#2A2A2A',
       },
       fontFamily: {
         sans: ['Inter', 'sans-serif'],
