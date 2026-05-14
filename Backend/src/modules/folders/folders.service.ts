@@ -164,7 +164,39 @@ export const foldersService = {
     },
 
     async getAllFolderSummary(userId: string){
-        
-    }
+        const now = new Date();
+        const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
+
+        const folders = await prisma.folder.findMany({
+            where: { userId },
+            include: {
+                transactions: {
+                    where: {
+                        status: 'COMPLETED',
+                        transactedAt: { gte: startOfMonth },
+                    },
+                    select: { amount: true },
+                },
+            },
+            orderBy: { type: 'asc' },
+        });
+
+        return folders.map((folder) => {
+            const monthlySpent = folder.transactions.reduce(
+                (sum, t) => sum + Number(t.amount),0);
+            return {
+                id: folder.id,
+                name: folder.name,
+                type: folder.type,
+                color: folder.color,
+                icon: folder.icon,
+                budgetLimit: folder.budgetLimit,
+                monthlySpent,
+                isOverBudget: folder.budgetLimit
+                ? monthlySpent > Number(folder.budgetLimit)
+                : false,
+            };
+        });
+    },
     
 };
