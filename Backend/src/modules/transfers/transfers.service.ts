@@ -1,3 +1,4 @@
+import { getIO } from '../../config/socket';
 import { Decimal } from '@prisma/client/runtime/library';
 import { prisma } from '../../config/database';
 import { ApiError } from '../../shared/utils/ApiError';
@@ -84,7 +85,17 @@ export const transfersService = {
       return transfer;
     });
 
-    return result;
+    try {
+      getIO().to(`user:${userId}`).emit('transfer:new', {
+        transfer: result,
+        fromAccountId: input.fromAccountId,
+        toAccountId: input.toAccountId,
+      });
+    }catch {
+        // socket not critical
+    }
+
+return result;
   },
 
   async getTransfers(userId: string, query: GetTransfersQuery) {

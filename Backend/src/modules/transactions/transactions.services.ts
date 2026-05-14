@@ -1,3 +1,4 @@
+import { getIO } from '../../config/socket';
 import { Decimal } from '@prisma/client/runtime/library';
 import { prisma } from '../../config/database';
 import { ApiError } from '../../shared/utils/ApiError';
@@ -62,7 +63,16 @@ export const transactionsService = {
             return transaction;
         }); // $transaction will consider all the operations till this point as one block
 
-        return result;
+        try {
+            getIO().to(`user:${userId}`).emit('transaction:new', {
+                transaction: result,
+                accountId: input.accountId,
+            });
+        }catch {
+            // socket not critical — don't fail the request if emit fails
+        }
+
+return result;
     },
 
     async getTransactions(userId: string, query: GetTransactionsQuery) {

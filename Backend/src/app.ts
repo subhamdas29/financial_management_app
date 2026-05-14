@@ -1,11 +1,13 @@
 import "dotenv/config";
 import './config/env';
 import express, {Request, Response, NextFunction} from "express";
+import { createServer } from "http";
 import cors from "cors";
 import { prisma } from "./config/database"
 import helmet from "helmet";
 import morgan from "morgan";
 import { errorMiddleware } from "./middleware/error.middleware";
+import { initSocket } from "./config/socket";
 import authRouter from "./modules/auth/auth.router";
 import accountsRouter from './modules/accounts/accounts.router';
 import transactionsRouter from "./modules/transactions/transactions.router"
@@ -14,6 +16,7 @@ import transfersRouter from "./modules/transfers/transfers.router";
 
 
 const app = express();
+const httpServer = createServer(app);
 const PORT= process.env.PORT || 3000;
 
 // middlewares
@@ -39,9 +42,10 @@ app.get("/health", async(req: Request, res: Response)=>{
 });
 
 
-app.use(errorMiddleware);
+app.use(errorMiddleware); // error handler
+initSocket(httpServer); 
 
 
-app.listen(PORT,()=>{
-  console.log("The app is listening.");
+httpServer.listen(PORT,()=>{
+  console.log("Server running on http://localhost:${PORT}");
 })
