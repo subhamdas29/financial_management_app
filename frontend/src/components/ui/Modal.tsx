@@ -13,17 +13,17 @@ export const Modal = ({ isOpen, onClose, title, children }: ModalProps) => {
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center">
       <div
-        className="absolute inset-0 bg-black/70 backdrop-blur-sm"
+        className="absolute inset-0 bg-black/75 backdrop-blur-sm"
         onClick={onClose}
       />
-      <div className="relative bg-dark-800 border border-dark-600 rounded-2xl p-6 w-full max-w-md mx-4 z-10">
+      <div className="relative bg-dark-700 border border-dark-500 rounded-2xl p-6 w-full max-w-md mx-4 z-10 shadow-2xl">
         <div className="flex items-center justify-between mb-5">
           <h2 className="text-lg font-semibold">{title}</h2>
           <button
             onClick={onClose}
-            className="text-gray-500 hover:text-white transition-colors"
+            className="w-8 h-8 rounded-xl bg-dark-600 flex items-center justify-center text-gray-500 hover:text-white hover:bg-dark-500 transition-all"
           >
-            <X size={20} />
+            <X size={16} />
           </button>
         </div>
         {children}

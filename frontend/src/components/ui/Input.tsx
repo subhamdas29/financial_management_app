@@ -13,7 +13,7 @@ export const Input = ({ label, error, className, ...props }: InputProps) => {
       )}
       <input
         className={clsx(
-          'bg-dark-700 border border-dark-500 rounded-xl px-4 py-2.5 text-white placeholder-gray-600 outline-none focus:border-accent transition-colors text-sm',
+          'bg-dark-600 border border-dark-400 rounded-xl px-4 py-2.5 text-white placeholder-gray-600 outline-none focus:border-accent transition-colors text-sm',
           { 'border-red-500': error },
           className
         )}

@@ -11,8 +11,9 @@ export const Card = ({ children, className, onClick }: CardProps) => {
     <div
       onClick={onClick}
       className={clsx(
-        'bg-dark-800 border border-dark-600 rounded-2xl p-5',
-        { 'cursor-pointer hover:border-accent/40 transition-colors': onClick },
+        'border border-dark-500 rounded-2xl p-5',
+        !className?.includes('bg-') && 'bg-dark-700',
+        { 'cursor-pointer hover:border-accent/50 transition-all': onClick },
         className
       )}
     >
