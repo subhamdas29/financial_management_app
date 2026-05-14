@@ -25,5 +25,5 @@ export const updateFolderSchema = z.object({
     }),
 });
 
-export type CreateFolderSchema = z.infer<typeof createFolderSchema>["body"];
-export type UpdateFolderSchema = z.infer<typeof updateFolderSchema>["body"];
+export type CreateFolderInput = z.infer<typeof createFolderSchema>["body"];
+export type UpdateFolderInput = z.infer<typeof updateFolderSchema>["body"];
