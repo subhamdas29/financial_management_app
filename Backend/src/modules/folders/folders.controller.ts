@@ -22,7 +22,7 @@ export const foldersController = {
         sendSuccess(res, folder, "Folder fetched successfully");
     }),
 
-    getFolderSummary: asyncHandler(async(req: AuthRequest, res: Response)=>{
+    getSummary: asyncHandler(async(req: AuthRequest, res: Response)=>{
         const summary = await foldersService.getFolderSummary(
             req.user!.userId, req.params.id as string, req.query.month as string | undefined 
         );

@@ -9,20 +9,23 @@ import { errorMiddleware } from "./middleware/error.middleware";
 import authRouter from "./modules/auth/auth.router";
 import accountsRouter from './modules/accounts/accounts.router';
 import transactionsRouter from "./modules/transactions/transactions.router"
+import foldersRouter from "./modules/folders/folders.router";
+
 
 const app = express();
 const PORT= process.env.PORT || 3000;
 
-
+// middlewares
 app.use(helmet()); //  to protect from XSS or clickjacking
 app.use(cors()); // to allow frontend enter into the backend 
 app.use(morgan("dev")); // logger
 app.use(express.json()); // to use json
 
-
+// routers
 app.use("/api/auth", authRouter);
 app.use("/api/accounts", accountsRouter);
 app.use("/api/transactions", transactionsRouter);
+app.use("/api/folders/", foldersRouter);
 
 app.get("/health", async(req: Request, res: Response)=>{
   try{
