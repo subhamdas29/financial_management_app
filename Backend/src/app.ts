@@ -10,6 +10,7 @@ import authRouter from "./modules/auth/auth.router";
 import accountsRouter from './modules/accounts/accounts.router';
 import transactionsRouter from "./modules/transactions/transactions.router"
 import foldersRouter from "./modules/folders/folders.router";
+import transfersRouter from "./modules/transfers/transfers.router";
 
 
 const app = express();
@@ -25,7 +26,8 @@ app.use(express.json()); // to use json
 app.use("/api/auth", authRouter);
 app.use("/api/accounts", accountsRouter);
 app.use("/api/transactions", transactionsRouter);
-app.use("/api/folders/", foldersRouter);
+app.use("/api/folders", foldersRouter);
+app.use("/api/transfers", transfersRouter);
 
 app.get("/health", async(req: Request, res: Response)=>{
   try{
