@@ -27,11 +27,11 @@ export const Sidebar = () => {
   return (
     <aside className="w-56 h-screen bg-dark-800 border-r border-[#2A2A2A] flex flex-col fixed left-0 top-0 z-30">
       {/* Logo */}
-      <div className="px-4 py-4 flex items-center">
+      <div className="px-3 py-3 flex items-center">
         <img
           src={PayFlowLogo}
           alt="PayFlow"
-          className="h-8 w-auto object-contain"
+          className="h-12 w-auto object-contain"
         />
       </div>
 
