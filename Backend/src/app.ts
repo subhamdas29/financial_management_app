@@ -25,7 +25,7 @@ app.use(helmet()); //  to protect from XSS or clickjacking
 app.use(cors({
   origin: [
     'http://localhost:5173',
-    'https://your-app.vercel.app', // add after Vercel deploy
+     process.env.FRONTEND_URL ?? '', // add after Vercel deploy
   ],
   credentials: true,
 })); // to allow frontend enter into the backend 
