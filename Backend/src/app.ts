@@ -22,11 +22,18 @@ const PORT= process.env.PORT || 3000;
 
 // middlewares
 app.use(helmet()); //  to protect from XSS or clickjacking
+const allowedOrigins = [
+  'http://localhost:5173',
+  process.env.FRONTEND_URL ?? '',
+];
+
 app.use(cors({
-  origin: [
-    'http://localhost:5173',
-     process.env.FRONTEND_URL ?? '', // add after Vercel deploy
-  ],
+  origin: allowedOrigins,
+  credentials: true,
+}));
+
+app.options('*', cors({
+  origin: allowedOrigins,
   credentials: true,
 })); // to allow frontend enter into the backend 
 app.use(morgan("dev")); // logger
