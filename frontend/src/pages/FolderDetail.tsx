@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { foldersApi } from '../api/folders.api';
 import { Card } from '../components/ui/Card';
-import { Button } from '../components/ui/Button';
 import { Loader } from '../components/ui/Loader';
 import { ArrowLeft, TrendingUp, TrendingDown, Receipt, CalendarDays } from 'lucide-react';
 import toast from 'react-hot-toast';

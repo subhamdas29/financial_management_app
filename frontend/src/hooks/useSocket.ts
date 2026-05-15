@@ -10,9 +10,9 @@ export const useSocket = () => {
   useEffect(() => {
     if (!isAuthenticated || !accessToken) return;
 
-    const socket = io('http://localhost:3000', {
-      auth: { token: accessToken },
-    });
+    const socket = io(import.meta.env.VITE_SOCKET_URL || 'http://localhost:3000', {
+  auth: { token: accessToken },
+});
 
     setSocket(socket);
 
