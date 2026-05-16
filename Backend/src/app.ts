@@ -30,11 +30,6 @@ const allowedOrigins = [
 app.use(cors({
   origin: allowedOrigins,
   credentials: true,
-}));
-
-app.options('*', cors({
-  origin: allowedOrigins,
-  credentials: true,
 })); // to allow frontend enter into the backend 
 app.use(morgan("dev")); // logger
 app.use(express.json()); // to use json
