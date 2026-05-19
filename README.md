@@ -16,23 +16,16 @@
   <img src="https://img.shields.io/badge/Prisma-5+-2D3748?style=for-the-badge&logo=prisma&logoColor=white" />
 </p>
 
----
-
-## 📋 Table of Contents
-
-- [Overview](#overview)
-- [Features](#features)
-- [Tech Stack](#tech-stack)
-- [Project Structure](#project-structure)
-- [Getting Started](#getting-started)
-- [Environment Variables](#environment-variables)
-- [API Documentation](#api-documentation)
-- [Database Schema](#database-schema)
-- [Screenshots](#screenshots)
-- [Deployment](#deployment)
-- [Author](#author)
 
 ---
+
+
+## Demo
+  <video src="./frontend/src/assets/Video Project.mp4" width="100%" autoplay loop muted></video>
+
+
+---
+
 
 ## 🧾 Overview
 
