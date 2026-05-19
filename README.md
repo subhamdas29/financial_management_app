@@ -21,7 +21,7 @@
 
 
 ## Demo
-  <video src="./frontend/src/assets/Video Project.mp4" width="100%" autoplay loop muted></video>
+ [![Watch Demo on LinkedIn](https://img.shields.io/badge/Watch%20Demo-LinkedIn-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/posts/subham-das-270a92278_fullstack-nodejs-typescript-ugcPost-7461696614542299137-Us1_?utm_source=share&utm_medium=member_desktop&rcm=ACoAAEPKn_QB12Oo6XVJRa1izfss1FPPq_Symww)
 
 
 ---
